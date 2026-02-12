@@ -40,7 +40,7 @@ public class Inhabitant {
         return Optional.ofNullable(birthDate);
     }
 
-    public Optional<Integer> getAgeinMonths() {
+    public Optional<Integer> getAgeInMonths() {
         return getBirthDay()
                 .map(birth -> (int) Period.between(birth, LocalDate.now()).getMonths());
     }

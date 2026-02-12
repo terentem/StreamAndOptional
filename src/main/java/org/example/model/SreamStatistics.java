@@ -30,13 +30,13 @@ public record SreamStatistics(
                         .map(Inhabitant::getColor)
                         .collect(Collectors.toSet()),
                 data.stream()
-                        .map(Inhabitant::getAgeinMonths)
+                        .map(Inhabitant::getAgeInMonths)
                         .flatMap(Optional::stream)
                         .mapToInt(age -> age)
                         .min()
                         .orElse(0),
                 data.stream()
-                        .map(Inhabitant::getAgeinMonths)
+                        .map(Inhabitant::getAgeInMonths)
                         .flatMap(Optional::stream)
                         .mapToInt(age -> age)
                         .max()

@@ -25,7 +25,7 @@ public class Streamator {
         return data.stream()
                 .filter(i -> type == null || type.equals(i.getType()))
                 .filter(i -> color == null || color.equals(i.getColor()))
-                .filter(i -> i.getAgeinMonths()
+                .filter(i -> i.getAgeInMonths()
                         .map(ageCondition::test)
                         .orElse(false))
                 .collect(Collectors.toList());
