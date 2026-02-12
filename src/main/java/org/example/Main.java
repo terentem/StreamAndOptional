@@ -15,7 +15,7 @@ import java.util.stream.IntStream;
 
 public class Main {
     public static void main(String[] args) {
-        List<String> names = List.of("Alf", "Bro", "Cinamon", "Drue", "Elon", "Faith", "Gina", "Hashy", "Init", "Joe");
+        List<String> names = List.of("Alf", "Bro", "Cinamon", "Drue", "Elon", "Faith", "Gina", "Hero", "Init", "Joe");
         List<Inhabitant> inhabitansList = IntStream.range(0, 100)
                 .mapToObj(index -> new Inhabitant(
                         (index % 2 == 0) ? "cat" : "dog",
