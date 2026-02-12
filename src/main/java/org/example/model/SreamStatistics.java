@@ -16,6 +16,7 @@ public record SreamStatistics(
         LocalDate minBirthDate,
         LocalDate maxBirthDay,
         long countNullBirthday) {
+
     public static SreamStatistics ofData(List<Inhabitant> data) {
         return new SreamStatistics(
                 data.size(),

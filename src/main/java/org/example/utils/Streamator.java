@@ -23,19 +23,19 @@ public class Streamator {
 
     public static List<Inhabitant> streamedData(List<Inhabitant> data, String type, String color, Predicate<Integer> ageCondition) {
         return data.stream()
-                .filter(i->type==null||type.equals(i.getType()))
-                .filter(i->color==null||color.equals(i.getColor()))
-                .filter(i->i.getAgeinMonths()
-                .map(ageCondition::test)
+                .filter(i -> type == null || type.equals(i.getType()))
+                .filter(i -> color == null || color.equals(i.getColor()))
+                .filter(i -> i.getAgeinMonths()
+                        .map(ageCondition::test)
                         .orElse(false))
                 .collect(Collectors.toList());
     }
 
-    public static List<Inhabitant> getInhabitantsWIthEmptyBirthday(List<Inhabitant> data, String type, String color){
+    public static List<Inhabitant> getInhabitantsWIthEmptyBirthday(List<Inhabitant> data, String type, String color) {
         return data.stream()
-                .filter(emptyBirthday->emptyBirthday.getBirthDay().isEmpty())
-                .filter(i->type==null||i.getType().equals(type))
-                .filter(i->color==null||i.getColor().equals(color))
+                .filter(emptyBirthday -> emptyBirthday.getBirthDay().isEmpty())
+                .filter(i -> type == null || i.getType().equals(type))
+                .filter(i -> color == null || i.getColor().equals(color))
                 .collect(Collectors.toList());
     }
 }

@@ -1,29 +1,28 @@
 package org.example;
 
+
+import jakarta.validation.ConstraintViolation;
 import org.example.model.Inhabitant;
 import org.example.model.SreamStatistics;
+import org.example.utils.InhabitantsListCreator;
 import org.example.utils.Streamator;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+
+import static org.example.validation.MyValidator.VALIDATOR;
 
 
 public class Main {
     public static void main(String[] args) {
         List<String> names = List.of("Alf", "Bro", "Cinamon", "Drue", "Elon", "Faith", "Gina", "Hero", "Init", "Joe");
         List<Inhabitant> inhabitansList = IntStream.range(0, 100)
-                .mapToObj(index -> new Inhabitant(
-                        (index % 2 == 0) ? "cat" : "dog",
-                        names.get(index % 10),
-                        (index % 3 > 0) ? "white" : "brown",
-                        (index % 10 < 5) ? LocalDate.of(2025, ((index % 10) + 1), 1) : null,
-                        (index % 10 > 5) ? String.valueOf(ThreadLocalRandom.current().nextLong(100000, 1000000)) : null,
-                        (index % 2 == 0) ? "male" : "female"))
+                .mapToObj(index -> InhabitantsListCreator.buildInhabitant(index, names))
+                .peek(inhabitant -> validate(inhabitant))
+                .filter(inhabitant -> VALIDATOR.validate(inhabitant).isEmpty())
                 .collect(Collectors.toList());
 
         //Білі кошенята до 6 місяців
@@ -49,5 +48,15 @@ public class Main {
         System.out.println("В базі " + brownDogsWithEmptyBirthday.size() + " коричневих собачок без дати народження");
     }
 
+    private static void validate(Inhabitant inhabitant) {
+        Set<ConstraintViolation<Inhabitant>> violations = VALIDATOR.validate(inhabitant);
+        if (!violations.isEmpty()) {
+            System.err.println(" Validation errors for: " + inhabitant);
+            violations.forEach(v ->
+                    System.err.println("   → " + v.getPropertyPath() + ": " + v.getMessage())
+            );
+        }
+
+    }
 }
 
